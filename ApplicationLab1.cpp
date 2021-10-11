@@ -19,7 +19,7 @@ struct station {
 	int number, work_station;
 	float percent;
 };
-void check(float& a) {
+void getfloat(float& a) {
 	cin >> a;
 	while (a <= 0 || cin.peek() != '\n')
 	{
@@ -30,7 +30,7 @@ void check(float& a) {
 		cin >> a;
 	}
 }
-void checkint(int& a) {
+void getint(int& a) {
 	cin >> a;
 	while (a <= 0 || cin.peek() != '\n')
 	{
@@ -42,7 +42,7 @@ void checkint(int& a) {
 	}
 }
 
-void checkeff(float& a) {
+void geteff(float& a) {
 	cin >> a;
 	while (a <= 0 || cin.peek() != '\n' || a > 100)
 	{
@@ -54,7 +54,7 @@ void checkeff(float& a) {
 	}
 }
 
-void checkbool(bool& a) {
+void getbool(bool& a) {
 	while (!(cin >> a) || (cin.peek() != '\n'))
 	{
 		cin.clear();
@@ -63,7 +63,7 @@ void checkbool(bool& a) {
 		}
 	}
 }
-void checkstring(string& k) {
+void getstring(string& k) {
 	string a;
 	cin.ignore(2000, '\n');
 	getline(cin, a);
@@ -104,24 +104,24 @@ void input(pipe& Pipe)
 {
 	Pipe.id = 0;
 	cout << "Pipe lenght" << endl;
-	check(Pipe.lenght);
+	getfloat(Pipe.lenght);
 	cout << "Pipe diameter" << endl;
-	check(Pipe.diameter);
+	getfloat(Pipe.diameter);
 	cout << "Is it work?" << endl;
-	checkbool(Pipe.work);
+	getbool(Pipe.work);
 	cout << endl;
 }
 void inputstation(station& Station)
 {
 	Station.id = 0;
 	cout << "Name of station:" << endl;
-	checkstring(Station.name);
+	getstring(Station.name);
 	cout << "How many workshop?" << endl;
-	checkint(Station.number);
+	getint(Station.number);
 	cout << "How many working?" << endl;
 	cp(Station.work_station, Station.number);
 	cout << "Percent of station" << endl;
-	checkeff(Station.percent);
+	geteff(Station.percent);
 }
 void changepipe(pipe& Pipe)
 {
@@ -135,15 +135,15 @@ void changepipe(pipe& Pipe)
 		switch (k) {
 		case 1:
 			cout << "Write length" << endl;
-			check(Pipe.lenght);
+			getfloat(Pipe.lenght);
 			break;
 		case 2:
 			cout << "Wtite diameter" << endl;
-			check(Pipe.diameter);
+			getfloat(Pipe.diameter);
 			break;
 		case 3:
 			cout << "Work status" << endl;
-			checkbool(Pipe.work);
+			getbool(Pipe.work);
 			break;
 		}
 	}
@@ -213,13 +213,16 @@ void file2(pipe& Pipe, station& Station) {
 }
 void write(pipe& Pipe, station& Station) {
 	ifstream Fin;
-	Fin.open("File.txt", ios::app);
-	Fin >> Pipe.id >> Pipe.lenght >> Pipe.diameter >> Pipe.work;
-	Fin >> Station.id;
-	Fin.ignore(numeric_limits<std::streamsize>::max(), '\n');
-	getline(Fin, Station.name);
-	Fin>> Station.number >> Station.work_station >> Station.percent;
-	Fin.close();
+
+		Fin.open("File.txt", ios::app);
+		Fin>> Pipe.id;
+			Fin >> Pipe.lenght >> Pipe.diameter >> Pipe.work;
+			Fin >> Station.id;
+			Fin.ignore(numeric_limits<std::streamsize>::max(), '\n');
+			getline(Fin, Station.name);
+			Fin >> Station.number >> Station.work_station >> Station.percent;
+			Fin.close();
+		}
 }
 void outputstation(station& Station)
 {
